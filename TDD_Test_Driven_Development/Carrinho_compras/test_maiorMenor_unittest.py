@@ -8,8 +8,8 @@ class TestaCarrinho(TestCase):
         self.carrinho = Carrinho()
         self.itens = {'Notebook': 1559.65, 'Celular': 2582.00, 'Teclado': 158.98, 'Caneta': 1.65, 'Mouse': 69.98,
                       'Grafites': 1.65}
-        for produto, valor in self.itens.items():
-            self.carrinho.add_item_carrinho(produto, valor)
+
+        self.carrinho.add_item_carrinho(self.itens)
         self.menor = self.carrinho.menor_valor()
         self.maior = self.carrinho.maior_valor()
 
