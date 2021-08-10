@@ -1,0 +1,2 @@
+class ValorZero(Exception):
+    pass

@@ -2,12 +2,21 @@ class Carrinho():
 
     def __init__(self):
         self._lista = {}
+        self._lista_zero = []
+        self.lista_maior_produto = []
+        self.lista_menor_produto = []
 
-    def add_item_carrinho(self, nome, valor ):
-        if valor != 0:
-            self._lista[str(nome)] = float(valor)
-        else:
-            raise ValueError('Valor não pode ser zero')
+
+    @property
+    def lista_itens(self):
+        return self._lista
+
+    def add_item_carrinho(self, itens):  # itens recebe um dicionário
+        for produto, valor in itens.items():
+            if valor != 0:
+                self._lista[str(produto)] = float(valor)
+            else:
+                self._lista_zero.append(produto)
 
     def maior_menor(self):
         menor = maior = 0
@@ -16,13 +25,13 @@ class Carrinho():
                 maior = valor
                 menor = valor
             else:
-                # Menor
-                if valor > maior:
+                # Maior
+                if valor >= maior:
                     maior = valor
-                # Meior
+
+                # Menor
                 if valor <= menor:
                     menor = valor
-                    menor_produto = produto
 
         return menor, maior
 
@@ -32,22 +41,30 @@ class Carrinho():
     def maior_valor(self):
         return self.maior_menor()[1]
 
+    def produtos_valor_zero(self):
+        return self.maior_menor()[2]
+
+    @property
     def maior_produto(self):
-        global maior_produto
         for produto, valor in self._lista.items():
             if valor == self.maior_valor():
-                maior_produto = produto
-        return maior_produto
+                self.lista_maior_produto.append(produto)
 
+        return f'Os produtos com MAIOR valor são: {self.lista_maior_produto}'
+
+    @property
     def menor_produto(self):
-        global menor_produto
         for produto, valor in self._lista.items():
             if valor == self.menor_valor():
-                menor_produto = produto
-        return menor_produto
+                self.lista_menor_produto.append(produto)
+        return f'Os produtos com MENOR valor são: {self.lista_menor_produto}'
 
     def __str__(self):
-        return f'{self._lista}'
+        if len(self._lista_zero) == 0:
+            return f'Produtos: {self._lista}\nProdutos com valor igual a zero: NENHUM PRODUTO COM VALOR ZERO'
+        else:
+            return f'Produtos: {self._lista}\nProdutos com valor igual a zero: {self._lista_zero}'
+
 
 
 
