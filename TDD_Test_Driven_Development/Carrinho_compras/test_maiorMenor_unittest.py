@@ -10,8 +10,8 @@ class TestaCarrinho(TestCase):
                       'Grafites': 1.65}
 
         self.carrinho.add_item_carrinho(self.itens)
-        self.menor = self.carrinho.menor_valor()
-        self.maior = self.carrinho.maior_valor()
+        self.menor = self.carrinho.menor_valor
+        self.maior = self.carrinho.maior_valor
 
     def test_se_o_menor_valor_realmente_eh_o_menor(self):
         menor_esperado = 0
@@ -22,7 +22,7 @@ class TestaCarrinho(TestCase):
                 if valor < menor_esperado:
                     menor_esperado = valor
 
-        self.assertEqual(menor_esperado, self.carrinho.menor_valor())
+        self.assertEqual(menor_esperado, self.carrinho.menor_valor)
 
     def test_se_o_maior_valor_realmente_eh_o_maior(self):
         maior_esperado = 0
@@ -30,15 +30,28 @@ class TestaCarrinho(TestCase):
             if maior_esperado == 0:
                 maior_esperado = valor
             else:
-                if valor < maior_esperado:
+                if valor > maior_esperado:
                     maior_esperado = valor
 
-        self.assertEqual(maior_esperado, self.carrinho.menor_valor())
+        self.assertEqual(maior_esperado, self.carrinho.maior_valor)
 
-    def test_se_o_nome_do_produto_menor_eh_igual_do_menor_valor_esperado(self):
+    def test_se_o_nome_do_produto_MENOR_eh_igual_do_menor_valor_esperado(self):
+        nome_esperado = []
         for produto, valor in self.itens.items():
             if valor == self.menor:
-                produto_
+                nome_esperado.append(produto.lower())
+
+        self.assertEqual(nome_esperado, self.carrinho.menor_produto())
+
+    def test_se_o_nome_do_produto_MAIOR_eh_igual_do_menor_valor_esperado(self):
+        nome_esperado = []
+        for produto, valor in self.itens.items():
+            if valor == self.maior:
+                nome_esperado.append(produto.lower())
+
+        self.assertEqual(nome_esperado, self.carrinho.maior_produto())
+
+
 
 
 
